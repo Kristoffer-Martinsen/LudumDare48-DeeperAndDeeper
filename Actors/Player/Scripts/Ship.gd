@@ -1,6 +1,8 @@
 class_name Ship
 extends KinematicBody2D
 
+var health: int = 16
+
 export (float) var acceleration = 2
 export (float) var max_speed = 128
 export (float) var friction = 1
@@ -63,3 +65,10 @@ func shoot():
 
 func _on_ShootCooldown_timeout():
 	can_shoot = true
+
+
+func _on_Hurtbox_area_entered(area):
+	if health - area.get_parent().damage <= 0:
+		queue_free()
+	health -= area.get_parent().damage
+	screen_shake.start(0.2, 10, 13, 2)
