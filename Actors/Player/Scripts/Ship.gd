@@ -1,8 +1,8 @@
 class_name Ship
 extends KinematicBody2D
 
-export (float) var acceleration = 8
-export (float) var max_speed = 16
+export (float) var acceleration = 2
+export (float) var max_speed = 128
 export (float) var friction = 1
 var rotation_speed: float = 4
 var velocity: Vector2 = Vector2.ZERO
@@ -14,12 +14,14 @@ var can_shoot: bool = true
 onready var shoot_cooldown: Timer = $Timers/ShootCooldown
 export (float) var fire_rate = 0.2 
 onready var screen_shake = $Camera2D/ScreenShake
+export (int) var damage = 1
 
 func _physics_process(delta):
 	rotate_turret()
 	controls(delta)
-	# TODO: clamp max speed
+	velocity = velocity.clamped(max_speed)
 	velocity = move_and_slide(velocity)
+	print(velocity)
 
 func controls(delta):
 	var rot_dir = 0
@@ -33,10 +35,6 @@ func controls(delta):
 	
 	if Input.is_action_pressed("shoot") and can_shoot:
 		shoot()
-
-
-	# TODO: Improve movement. Specifically making moving opposite to the current
-	# TODO: velocity more influential
 	if Input.is_action_pressed("thrust"):
 		velocity += Vector2(acceleration, 0).rotated(rotation)
 	if Input.is_action_pressed("brake"):
@@ -57,6 +55,7 @@ func shoot():
 	var bullet = bullet_scene.instance()
 	get_tree().get_root().add_child(bullet)
 	bullet.position = position
+	bullet.damage = damage
 	bullet.look_at(get_global_mouse_position())
 	screen_shake.start(0.1, 6, 10, 1)
 	can_shoot = false
