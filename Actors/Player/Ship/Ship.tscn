@@ -1,15 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Ship/Ship.png" type="Texture" id=1]
 [ext_resource path="res://Actors/Player/Scripts/Ship.gd" type="Script" id=2]
 [ext_resource path="res://Actors/Player/Ship/Turret.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Player/Ship/PlayerBullet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Actors/ScreenShake.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.16213
 height = 1.12373
 
-[node name="Ship" type="KinematicBody2D"]
+[node name="Ship" type="KinematicBody2D" groups=[
+"Player",
+]]
 collision_layer = 2
 script = ExtResource( 2 )
 acceleration = 1.0
@@ -31,6 +34,8 @@ collision_mask = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="ScreenShake" parent="Camera2D" instance=ExtResource( 5 )]
 
 [node name="Timers" type="Node" parent="."]
 

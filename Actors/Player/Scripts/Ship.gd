@@ -13,10 +13,12 @@ export var bullet_scene: PackedScene
 var can_shoot: bool = true
 onready var shoot_cooldown: Timer = $Timers/ShootCooldown
 export (float) var fire_rate = 0.2 
+onready var screen_shake = $Camera2D/ScreenShake
 
 func _physics_process(delta):
 	rotate_turret()
 	controls(delta)
+	# TODO: clamp max speed
 	velocity = move_and_slide(velocity)
 
 func controls(delta):
@@ -56,6 +58,7 @@ func shoot():
 	get_tree().get_root().add_child(bullet)
 	bullet.position = position
 	bullet.look_at(get_global_mouse_position())
+	screen_shake.start(0.1, 6, 10, 1)
 	can_shoot = false
 	shoot_cooldown.start(fire_rate)
 
