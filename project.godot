@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="LudumDare48-DeeperAndDeeper"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
 [display]
@@ -19,6 +20,8 @@ window/size/width=640
 window/size/height=360
 window/size/test_width=1920
 window/size/test_height=1080
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [importer_defaults]
 
