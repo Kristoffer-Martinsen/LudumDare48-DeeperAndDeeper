@@ -11,7 +11,9 @@ var can_shoot: bool = true
 var damage: int = 1
 var target = null
 export var fire_rate: float = 2.0
-
+onready var shoot_sound = $ShootSound
+onready var hit_sound = $HitSound
+onready var death_sound = $
 
 func _physics_process(delta):
 	if target == null:
@@ -26,6 +28,7 @@ func do_shoot():
 	if can_shoot:
 		var bullet = bullet_scene.instance()
 		get_tree().get_root().add_child(bullet)
+		shoot_sound.play()
 		bullet.position = position
 		bullet.damage = damage
 		bullet.look_at(target.position)
@@ -55,5 +58,6 @@ func _on_Range_body_entered(body):
 
 func _on_Hurtbox_area_entered(area):
 	take_damage(area.get_parent().damage)
+	hit_sound.play()
 	area.get_parent().queue_free()
 	pass # Replace with function body.

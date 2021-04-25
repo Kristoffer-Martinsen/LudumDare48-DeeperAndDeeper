@@ -1,17 +1,15 @@
 class_name Ship
 extends KinematicBody2D
 
-signal no_health
-signal health_changed(value)
-
-var max_health: int = 5
-var health: int = 5 setget set_health
-
 export (float) var acceleration = 2
 export (float) var max_speed = 128
 export (float) var friction = 1
 var rotation_speed: float = 4
 var velocity: Vector2 = Vector2.ZERO
+
+onready var shoot_sound := $ShootSound
+onready var hit_sound = $HitSound
+onready var death_sound = $DeathSound
 
 onready var turret := $Turret
 
@@ -22,12 +20,16 @@ export (float) var fire_rate = 0.2
 onready var screen_shake = $Camera2D/ScreenShake
 export (int) var damage = 1
 
+onready var stats: Node = PlayerStats
+
+func _ready():
+	stats.connect("no_health", self, "queue_free")
+
 func _physics_process(delta):
 	rotate_turret()
 	controls(delta)
 	velocity = velocity.clamped(max_speed)
 	velocity = move_and_slide(velocity)
-	print(velocity)
 
 func controls(delta):
 	var rot_dir = 0
@@ -60,6 +62,7 @@ func rotate_turret():
 func shoot():
 	var bullet = bullet_scene.instance()
 	get_tree().get_root().add_child(bullet)
+	shoot_sound.play()
 	bullet.position = position
 	bullet.damage = damage
 	bullet.look_at(get_global_mouse_position())
@@ -70,15 +73,14 @@ func shoot():
 func _on_ShootCooldown_timeout():
 	can_shoot = true
 
-
 func _on_Hurtbox_area_entered(area):
-	health -= area.get_parent().damage
+	stats.health -= area.get_parent().damage
+	hit_sound.play()
 	screen_shake.start(0.2, 10, 13, 2)
 	area.get_parent().queue_free()
 
-func set_health(value):
-	health = value
-	emit_signal("health_changed", health)
-	if health <= 0:
-		emit_signal("no_health")
-		queue_free()
+func _on_Stats_no_health():
+	death_sound.play()
+
+func _on_DeathSound_finished():
+	queue_free()

@@ -1,10 +1,13 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Actors/Enemies/DRONE/drone.png" type="Texture" id=1]
 [ext_resource path="res://Actors/Enemies/Drone/DroneTurret.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Actors/Hurtbox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Actors/Enemies/Drone/Drone.gd" type="Script" id=4]
 [ext_resource path="res://Actors/Enemies/Drone/EnemyBullet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Sounds/Shoot.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Sounds/Hit_Hurt.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/Explosion.wav" type="AudioStream" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.0
@@ -81,11 +84,21 @@ shape = SubResource( 5 )
 
 [node name="ShootCooldown" type="Timer" parent="Timers"]
 
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="HitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="RetreatRange" to="." method="_on_RetreatRange_body_entered"]
 [connection signal="body_exited" from="RetreatRange" to="." method="_on_RetreatRange_body_exited"]
 [connection signal="body_entered" from="AggroRange" to="." method="_on_AggroRange_body_entered"]
 [connection signal="body_exited" from="DeaggroRange" to="." method="_on_DeaggroRange_body_exited"]
 [connection signal="timeout" from="Timers/ShootCooldown" to="." method="_on_ShootCooldown_timeout"]
+[connection signal="finished" from="DeathSound" to="." method="_on_DeathSound_finished"]
 
 [editable path="Hurtbox"]

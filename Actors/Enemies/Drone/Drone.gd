@@ -30,6 +30,9 @@ var can_shoot: bool = true
 onready var shoot_cooldown: Timer = $Timers/ShootCooldown
 export (float) var fire_rate = 1
 export (int) var damage = 1 
+onready var shoot_sound := $ShootSound
+onready var hit_sound = $HitSound
+onready var death_sound = $DeathSound
 
 func _physics_process(delta):
 	sensors_pivot.rotation += ROTATION_SPEED * delta
@@ -68,8 +71,8 @@ func retreat_state():
 	do_shoot()
 
 func take_damage(dmg: int):
-	if health - dmg <= 0:
-		queue_free()
+	if health - dmg <= 0 and !death_sound.playing:
+		death_sound.play()
 	else:
 		health -= dmg
 
@@ -78,6 +81,7 @@ func do_shoot():
 	if can_shoot:
 		var bullet = bullet_scene.instance()
 		get_tree().get_root().add_child(bullet)
+		shoot_sound.play()
 		bullet.position = position
 		bullet.damage = damage
 		bullet.look_at(target.position)
@@ -116,7 +120,12 @@ func _on_RetreatRange_body_exited(body):
 
 func _on_Hurtbox_area_entered(area):
 	take_damage(area.get_parent().damage)
+	hit_sound.play()
 	area.get_parent().queue_free()
 
 func _on_ShootCooldown_timeout():
 	can_shoot = true
+
+func _on_DeathSound_finished():
+	queue_free()
+	pass # Replace with function body.

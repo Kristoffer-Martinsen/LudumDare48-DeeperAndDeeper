@@ -21,8 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="LudumDare48-DeeperAndDeeper"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://GUI/MainMenu/MainMenu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerStats="*res://Actors/Player/Ship/PlayerStats.tscn"
 
 [display]
 

@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/MainMenu/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/HowTo.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sounds/MenuSound.wav" type="AudioStream" id=3]
+
+[node name="HowTo" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 640.0
+margin_bottom = 360.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" parent="ColorRect" instance=ExtResource( 1 )]
+margin_left = 24.0
+margin_top = 280.0
+margin_right = -440.0
+margin_bottom = -32.0
+text = "BACK"
+
+[node name="PlayButton" parent="ColorRect" instance=ExtResource( 1 )]
+margin_left = 440.0
+margin_top = 280.0
+margin_right = -24.0
+margin_bottom = -32.0
+text = "Play"
+
+[node name="Label" type="Label" parent="ColorRect"]
+margin_left = 232.0
+margin_top = 40.0
+margin_right = 410.0
+margin_bottom = 139.0
+text = "W to move forward.
+S to move backward.
+
+A/D to rotate left and right.
+
+Left Mouse button to shoot."
+align = 1
+valign = 1
+
+[node name="MenuSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="mouse_entered" from="ColorRect/BackButton" to="." method="_on_BackButton_mouse_entered"]
+[connection signal="pressed" from="ColorRect/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="mouse_entered" from="ColorRect/PlayButton" to="." method="_on_PlayButton_mouse_entered"]
+[connection signal="pressed" from="ColorRect/PlayButton" to="." method="_on_PlayButton_pressed"]

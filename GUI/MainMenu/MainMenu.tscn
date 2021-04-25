@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GUI/MainMenu/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/MainMenu/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sounds/MenuSound.wav" type="AudioStream" id=3]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Control2" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 608.0
+margin_bottom = 328.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="VBoxContainer" parent="Control2/ColorRect"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 128.0
+margin_top = -144.0
+margin_right = -136.0
+margin_bottom = 92.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Control2/ColorRect/Control"]
+margin_right = 384.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+text = "THE SPACE GAME"
+align = 1
+valign = 1
+
+[node name="PlayButton" parent="Control2/ColorRect/Control" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 36.0
+margin_right = 384.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 64 )
+text = "Play"
+
+[node name="HowToButton" parent="Control2/ColorRect/Control" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 104.0
+margin_right = 384.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 64 )
+text = "How to play"
+
+[node name="ExitButton" parent="Control2/ColorRect/Control" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 172.0
+margin_right = 384.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 0, 64 )
+text = "Exit"
+
+[node name="MenuSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="mouse_entered" from="Control2/ColorRect/Control/PlayButton" to="." method="_on_PlayButton_mouse_entered"]
+[connection signal="pressed" from="Control2/ColorRect/Control/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="mouse_entered" from="Control2/ColorRect/Control/HowToButton" to="." method="_on_HowToButton_mouse_entered"]
+[connection signal="pressed" from="Control2/ColorRect/Control/HowToButton" to="." method="_on_HowToButton_pressed"]
+[connection signal="mouse_entered" from="Control2/ColorRect/Control/ExitButton" to="." method="_on_ExitButton_mouse_entered"]
+[connection signal="pressed" from="Control2/ColorRect/Control/ExitButton" to="." method="_on_ExitButton_pressed"]
