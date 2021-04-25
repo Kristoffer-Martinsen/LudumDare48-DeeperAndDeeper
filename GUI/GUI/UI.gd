@@ -3,7 +3,7 @@ extends Control
 var health = 5 setget set_health
 var max_health = 5 setget set_max_health
 
-onready var bar = $TextureRect/Bar/TextureProgress
+onready var bar = $Bar/TextureProgress
 
 func set_health(value):
 	health = clamp(value, 0, max_health)

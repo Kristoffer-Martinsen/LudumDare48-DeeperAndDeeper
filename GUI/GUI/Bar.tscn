@@ -4,8 +4,10 @@
 [ext_resource path="res://Assets/GUI/HealthGaugeBackground.png" type="Texture" id=2]
 
 [node name="Bar" type="HBoxContainer"]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 80.0
+margin_bottom = 56.0
 __meta__ = {
 "_edit_use_anchors_": false
 }

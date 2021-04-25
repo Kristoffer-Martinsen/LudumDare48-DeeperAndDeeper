@@ -69,6 +69,7 @@ margin_top = 172.0
 margin_right = 384.0
 margin_bottom = 236.0
 rect_min_size = Vector2( 0, 64 )
+disabled = true
 text = "Exit"
 
 [node name="MenuSound" type="AudioStreamPlayer" parent="."]
