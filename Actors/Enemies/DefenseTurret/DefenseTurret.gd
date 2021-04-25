@@ -13,7 +13,7 @@ var target = null
 export var fire_rate: float = 2.0
 onready var shoot_sound = $ShootSound
 onready var hit_sound = $HitSound
-onready var death_sound = $
+onready var death_sound = $DeathSound
 
 func _physics_process(delta):
 	if target == null:
@@ -46,8 +46,9 @@ func aim_target():
 		pivot.rotation_degrees = 0
 
 func take_damage(dmg: int):
-	if health - dmg <= 0:
-		queue_free()
+	if health - dmg <= 0 and !death_sound.playing:
+		health -= dmg
+		death_sound.play()
 	else:
 		health -= dmg
 
@@ -60,4 +61,14 @@ func _on_Hurtbox_area_entered(area):
 	take_damage(area.get_parent().damage)
 	hit_sound.play()
 	area.get_parent().queue_free()
+	pass # Replace with function body.
+
+
+func _on_DeathSound_finished():
+	queue_free()
+	pass # Replace with function body.
+
+
+func _on_Range_body_exited(body):
+	target = null
 	pass # Replace with function body.

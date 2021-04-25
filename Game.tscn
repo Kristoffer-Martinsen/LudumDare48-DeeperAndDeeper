@@ -528,3 +528,6 @@ rotation = 3.14159
 [node name="DefenseTurret3" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 376, 648 )
 rotation = -1.5708
+
+[node name="DefenseTurret" parent="." instance=ExtResource( 5 )]
+position = Vector2( 40, 88 )

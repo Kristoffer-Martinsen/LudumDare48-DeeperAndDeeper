@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Actors/Enemies/DefenseTurret/DefenseTurret.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Actors/Enemies/DefenseTurret/DefenseTurretTurret.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Actors/Enemies/Drone/EnemyBullet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Sounds/Shoot.wav" type="AudioStream" id=6]
 [ext_resource path="res://Assets/Sounds/Hit_Hurt.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/Explosion.wav" type="AudioStream" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( -4, -7, -4, 7, 0, 7, 4, 0, 0, -7 )
@@ -57,9 +58,12 @@ stream = ExtResource( 6 )
 stream = ExtResource( 7 )
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_Range_body_exited"]
 [connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="finished" from="DeathSound" to="." method="_on_DeathSound_finished"]
 
 [editable path="Hurtbox"]
