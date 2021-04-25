@@ -28,7 +28,7 @@ onready var turret = $DroneTurret
 export var bullet_scene: PackedScene
 var can_shoot: bool = true
 onready var shoot_cooldown: Timer = $Timers/ShootCooldown
-export (float) var fire_rate = 0.4
+export (float) var fire_rate = 1
 export (int) var damage = 1 
 
 func _physics_process(delta):

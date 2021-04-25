@@ -1,7 +1,11 @@
 class_name Ship
 extends KinematicBody2D
 
-var health: int = 16
+signal no_health
+signal health_changed(value)
+
+var max_health: int = 5
+var health: int = 5 setget set_health
 
 export (float) var acceleration = 2
 export (float) var max_speed = 128
@@ -68,7 +72,13 @@ func _on_ShootCooldown_timeout():
 
 
 func _on_Hurtbox_area_entered(area):
-	if health - area.get_parent().damage <= 0:
-		queue_free()
 	health -= area.get_parent().damage
 	screen_shake.start(0.2, 10, 13, 2)
+	area.get_parent().queue_free()
+
+func set_health(value):
+	health = value
+	emit_signal("health_changed", health)
+	if health <= 0:
+		emit_signal("no_health")
+		queue_free()

@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var speed: float = 300
+var speed: float = 100
 var velocity: Vector2 = Vector2.ZERO
 var damage: int = 0
 
