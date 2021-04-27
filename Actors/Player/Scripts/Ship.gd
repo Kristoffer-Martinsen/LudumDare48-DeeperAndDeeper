@@ -1,29 +1,27 @@
 class_name Ship
 extends KinematicBody2D
 
+onready var stats: Node = PlayerStats
+onready var screen_shake = $Camera2D/ScreenShake
+export var bullet_scene: PackedScene
+onready var turret := $Turret
+onready var shoot_cooldown: Timer = $Timers/ShootCooldown
+onready var shoot_sound := $ShootSound
+onready var hit_sound = $HitSound
+onready var death_sound = $DeathSound
+
 export (float) var acceleration = 2
 export (float) var max_speed = 128
 export (float) var friction = 1
 var rotation_speed: float = 4
 var velocity: Vector2 = Vector2.ZERO
 
-onready var shoot_sound := $ShootSound
-onready var hit_sound = $HitSound
-onready var death_sound = $DeathSound
-
-onready var turret := $Turret
-
-export var bullet_scene: PackedScene
 var can_shoot: bool = true
-onready var shoot_cooldown: Timer = $Timers/ShootCooldown
 export (float) var fire_rate = 0.2 
-onready var screen_shake = $Camera2D/ScreenShake
 export (int) var damage = 1
 
-onready var stats: Node = PlayerStats
-
 func _ready():
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "_on_Stats_no_health")
 
 func _physics_process(delta):
 	rotate_turret()

@@ -530,6 +530,9 @@ position = Vector2( 360, 280 )
 [node name="Target3" parent="Enemies/TargetTutorial" instance=ExtResource( 3 )]
 position = Vector2( 389.813, 144 )
 
+[node name="DefenseTurret4" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 56, 56 )
+
 [node name="TutorialDoor" parent="." instance=ExtResource( 7 )]
 position = Vector2( 256, 280 )
 

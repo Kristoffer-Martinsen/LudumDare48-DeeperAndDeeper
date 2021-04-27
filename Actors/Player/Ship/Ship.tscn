@@ -49,6 +49,7 @@ current = true
 [node name="ShootCooldown" type="Timer" parent="Timers"]
 
 [node name="Hurtbox" parent="." instance=ExtResource( 6 )]
+position = Vector2( -0.417137, -0.458851 )
 collision_layer = 4
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
